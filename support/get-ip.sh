@@ -2,6 +2,7 @@
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 IP_TYPE=`${DIR}/ip-type.sh`
 INTERFACE=`${DIR}/interface.sh`
+IF=`${DIR}/if.sh`
 
 hexToDecIp()
 {
@@ -16,7 +17,7 @@ hexToDecIp()
 
 inetInfo ()
 {
-  IP=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
+  IP=$($IF | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
 }
 
 netinfo ()
@@ -27,8 +28,8 @@ netinfo ()
 
     for NIC in "$@" ; do
         {
-        IP=`ifconfig $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $2}' | sed -e "s/addr\://"`
-        MASK=`ifconfig $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $4}' | sed -e "s/Mask\://"`
+        IP=`$IF $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $2}' | sed -e "s/addr\://"`
+        MASK=`$IF $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $4}' | sed -e "s/Mask\://"`
         IP1=`echo $IP |awk -F'.' '{print $1}'`
         if [ "$IP1" = "" ]; then
           echo ""
