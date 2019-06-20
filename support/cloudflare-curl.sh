@@ -17,31 +17,25 @@ data=''
 while [[ $# -gt 0 ]];  do
     key="$1"
     case $key in
-        -h|--help)
+      -h|--help)
         usage
         exit
         ;;
-        -m|--method)
-        if [ -z "$CURL_METHOD" ]; then
-          CURL_METHOD=$2
-        fi
+      -m|--method)
+        CURL_METHOD=$2
         shift
-	;;
-        -p|--path)
-        if [ -z "$CURL_PATH" ]; then
-          CURL_PATH=$2
-        fi
-        shift
-	;;
-        --debug)
-          if [ -z "$DEBUG" ]; then
-            DEBUG=on
-          fi
-          ;;
-        *)
-        data+=$key
-        data+=' '
         ;;
+      -p|--path)
+        CURL_PATH=$2
+        shift
+        ;;
+      --debug)
+        DEBUG=on
+        ;;
+      *)
+      data+=$key
+      data+=' '
+      ;;
     esac
     shift # past argument or value
 done
