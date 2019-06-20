@@ -16,5 +16,11 @@ ENV=.env-wan ./update-dns.sh
 * IP_TYPE=lan ./update-dns.sh 
 * IP_TYPE=wan ./update-dns.sh 
 
+## Use Crontab autoupdate
+* sudo crontab -e
+```
+*/5 * * * * /home/sys/bin/ddns.sh > /dev/shm/ddns.log 
+```
+
 ## Inspire
 * https://gist.github.com/benkulbertis/fff10759c2391b6618dd
