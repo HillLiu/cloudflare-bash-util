@@ -24,3 +24,8 @@ ENV=.env-wan ./update-dns.sh
 
 ## Inspire
 * https://gist.github.com/benkulbertis/fff10759c2391b6618dd
+
+## Change Log
+* 20190728
+   * Add logging support
+   * proxied could auto transfer to boolean value.
