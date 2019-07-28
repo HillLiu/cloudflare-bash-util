@@ -19,7 +19,7 @@ ENV=.env-wan ./update-dns.sh
 ## Use Crontab autoupdate
 * sudo crontab -e
 ```
-*/5 * * * * /home/sys/bin/ddns.sh > /dev/shm/ddns.log 
+*/5 * * * * /home/sys/bin/update-dns.sh 
 ```
 
 ## Inspire
