@@ -57,5 +57,10 @@ fi
 if [ ! -z "$DEBUG" ]; then
   echo $cmd
 else
-  echo "$cmd" | bash
+  result=$(echo "$cmd" | bash)
+  if [[ $result == *"\"success\":false"* ]]; then
+    >&2 echo "$result --- $cmd"
+  else
+    echo "$result"
+  fi
 fi

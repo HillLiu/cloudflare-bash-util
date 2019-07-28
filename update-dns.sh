@@ -28,7 +28,7 @@ if [ -z "$LOG_ENABELED" ]; then
   result=$(echo $update | bash)
   echo $result;
 else
-  result=$(echo $update | bash > $LOG_FILE 2> $ERROR_LOG_FILE)
+  result=$(echo $update | bash >> $LOG_FILE 2>> $ERROR_LOG_FILE)
   echo "Log file @ ${LOG_FILE}"
   echo "Error log file @ ${ERROR_LOG_FILE}"
 fi
