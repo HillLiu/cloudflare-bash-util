@@ -24,6 +24,11 @@ json+=$PROXIED
 json+='}'
 update="${DIR}/support/cloudflare-curl.sh -m PUT -p dns_records/${RECORD_ID} '${json}'"
 
+if [ -z "$RECORD_ID" ]; then
+  echo "Get RECORD_ID failed."
+  exit 1;
+fi
+
 if [ -z "$LOG_ENABELED" ]; then 
   result=$(echo $update | bash)
   echo $result;
