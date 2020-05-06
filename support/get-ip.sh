@@ -26,10 +26,8 @@ netinfo ()
     MASK=""
     NET=""
 
-    for NIC in "$@" ; do
-        {
+    for NIC in "$@" ; do {
         IP=`$IF $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $2}' | sed -e "s/addr\://"`
-        MASK=`$IF $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $4}' | sed -e "s/Mask\://"`
         IP1=`echo $IP |awk -F'.' '{print $1}'`
         if [ "$IP1" = "" ]; then
           echo ""
@@ -39,6 +37,7 @@ netinfo ()
           echo ""
           exit 1
         else
+          MASK=`$IF $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $4}' | sed -e "s/Mask\://"`
           IP2=`echo $IP |awk -F'.' '{print $2}'`
           IP3=`echo $IP |awk -F'.' '{print $3}'`
           IP4=`echo $IP |awk -F'.' '{print $4}'`
@@ -57,25 +56,25 @@ netinfo ()
           let NET4="$IP4 & $MASK4"
           NET="$NET1.$NET2.$NET3.$NET4"
         fi
-        }
+    }
     done
 }
 
 getLanIp() {
-if [ -z $INTERFACE ]; then
-  inetInfo
-else
-  netinfo "$INTERFACE"
-fi
-MY_IP=$IP
+  if [ -z $INTERFACE ]; then
+    inetInfo
+  else
+    netinfo "$INTERFACE"
+  fi
+  MY_IP=$IP
 }
 
 getWanIp() {
- cmd="curl -s 'http://ipecho.net/plain'"
- if [ ! -z $INTERFACE ]; then
-  cmd+=" --interface $INTERFACE"
- fi
- MY_IP=$(echo "$cmd" | bash)
+  cmd="curl -s 'http://ipecho.net/plain'"
+  if [ ! -z $INTERFACE ]; then
+    cmd+=" --interface $INTERFACE"
+  fi
+  MY_IP=$(echo "$cmd" | bash)
 }
 
 if [ -z "$MY_IP" ]; then
