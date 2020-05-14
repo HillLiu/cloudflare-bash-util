@@ -35,7 +35,6 @@ netinfo ()
           echo "Action is aborted."
           echo "Please make sure the interface is setup properly, then try again."
           echo ""
-          exit 1
         else
           MASK=`$IF $NIC | sed -n -E 's/(inet |inet addr)/\1/p' | awk '{print $4}' | sed -e "s/Mask\://"`
           IP2=`echo $IP |awk -F'.' '{print $2}'`
@@ -65,6 +64,9 @@ getLanIp() {
     inetInfo
   else
     netinfo "$INTERFACE"
+    if [ -z $IP ]; then
+      inetInfo
+    fi
   fi
   MY_IP=$IP
 }
