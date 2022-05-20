@@ -13,8 +13,14 @@ fi
 
 RECORD_ID=`DEBUG=${DEBUG} ${DIR}/cloudflare-curl.sh -m GET -p dns_records?name=$RECORD_NAME` 
 
+getField() {
+  text=$1
+  field=$2
+  echo $text | sed -n 's|.*"'${field}'"\s*:\s*"\([^"]*\)".*|\1|p'
+}
+
 if [ "x$DEBUG" == "xoff" ]; then
-  echo $RECORD_ID | sed -n 's|.*"id"\s*:\s*"\([^"]*\)".*|\1|p'
+  echo $(getField $RECORD_ID id)
 else
   echo $RECORD_ID
 fi
